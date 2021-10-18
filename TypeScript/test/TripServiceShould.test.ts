@@ -26,18 +26,27 @@ describe("TripService should", () => {
             .toEqual([]);
     });
 
-    it("return an empty list when user not in friends list", () => {
+    it("return an empty list when given user has no friend", () => {
+        const bob = new User();
+
+        spyOn(UserSession, "getLoggedUser").mockReturnValue(alice);
+
+        expect(tripService.getTripsByUser(bob))
+            .toEqual([]);
+    });
+
+    it("return an empty list when logged user not in friends list", () => {
         const bob = new User();
         bob.addFriend(new User());
         bob.addFriend(new User());
 
         spyOn(UserSession, "getLoggedUser").mockReturnValue(alice);
 
-        expect(tripService.getTripsByUser(new User()))
+        expect(tripService.getTripsByUser(bob))
             .toEqual([]);
     });
 
-    it("return a trip list when user is in friends list", () => {
+    it("return a trip list when logged user is in friends list", () => {
         const mark = new User();
         mark.addFriend(new User());
         mark.addFriend(alice);

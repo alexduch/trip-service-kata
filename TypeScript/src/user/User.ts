@@ -21,12 +21,7 @@ export default class User {
     }
 
     public isFriendOf(other: User): boolean {
-        for (const friend of other.getFriends()) {
-            if (friend === this) {
-                return true;
-            }
-        }
-        return false;
+        return other.getFriends().filter((friend) => friend === this).length > 0;
     }
 
 }

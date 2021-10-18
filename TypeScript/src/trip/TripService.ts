@@ -5,6 +5,7 @@ import Trip from "./Trip";
 import TripDAO from "./TripDAO";
 
 export default class TripService {
+
     public getTripsByUser(user: User): Trip[] {
         let tripList: Trip[] = [];
 

@@ -19,4 +19,14 @@ export default class User {
     public getTrips(): Trip[] {
         return this.trips;
     }
+
+    public isFriendOf(other: User): boolean {
+        for (const friend of other.getFriends()) {
+            if (friend === this) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

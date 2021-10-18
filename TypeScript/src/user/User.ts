@@ -27,7 +27,11 @@ export default class User {
     }
 
     public isFriendOf(other: User): boolean {
-        return other.getFriends().filter((friend) => friend === this).length > 0;
+        return other.hasFriend(this);
+    }
+
+    public hasFriend(other: User) {
+        return this.friends.findIndex((friend) => friend === other) > -1;
     }
 
 }

@@ -2,6 +2,7 @@ import "jest";
 import UserNotLoggedInException from "../src/exception/UserNotLoggedInException";
 import Trip from "../src/trip/Trip";
 import TripDAO from "../src/trip/TripDAO";
+import TripRepository from "../src/trip/TripRepository";
 import TripService from "../src/trip/TripService";
 import User from "../src/user/User";
 import UserService from "../src/user/UserService";
@@ -10,7 +11,7 @@ import spyOn = jest.spyOn;
 
 describe("TripService should", () => {
 
-    const tripService = new TripService(new UserService());
+    const tripService = new TripService(new UserService(), new TripRepository());
     const alice: User = new User();
 
     it("throw if user not logged in", () => {

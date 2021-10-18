@@ -1,18 +1,20 @@
 import User from "../user/User";
 import UserService from "../user/UserService";
 import Trip from "./Trip";
-import TripDAO from "./TripDAO";
+import TripRepository from "./TripRepository";
 
 export default class TripService {
     private userService: UserService;
+    private tripRepository: TripRepository;
 
-    constructor(userService: UserService) {
+    constructor(userService: UserService, tripRepository: TripRepository) {
         this.userService = userService;
+        this.tripRepository = tripRepository;
     }
 
     public getTripsByUser(user: User): Trip[] {
         if (this.currentUserCanViewTripsOf(user)) {
-            return TripDAO.findTripsByUser(user);
+            return this.tripRepository.findTripsByUser(user);
         } else {
             return [];
         }

@@ -48,11 +48,13 @@ describe("TripService should", () => {
 
     it("return a trip list when logged user is in friends list", () => {
         const mark = new User([new User(), alice]);
+        const roma = new Trip();
+        const paris = new Trip();
 
         spyOn(UserSession, "getLoggedUser").mockReturnValue(alice);
-        spyOn(TripDAO, "findTripsByUser").mockReturnValue([new Trip(), new Trip()]);
+        spyOn(TripDAO, "findTripsByUser").mockReturnValue([roma, paris]);
 
         expect(tripService.getTripsByUser(mark))
-            .toHaveLength(2);
+            .toEqual([roma, paris]);
     });
 });

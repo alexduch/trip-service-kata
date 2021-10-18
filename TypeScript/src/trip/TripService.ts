@@ -16,12 +16,14 @@ export default class TripService {
     }
 
     public currentUserCanViewTripsOf(user): boolean {
-        const loggedUser: User = UserSession.getLoggedUser();
+        return this.getLoggedUser().isFriendOf(user);
+    }
 
+    private getLoggedUser() {
+        const loggedUser: User = UserSession.getLoggedUser();
         if (loggedUser == null) {
             throw new UserNotLoggedInException();
         }
-
-        return loggedUser.isFriendOf(user);
+        return loggedUser;
     }
 }

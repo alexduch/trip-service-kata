@@ -10,7 +10,7 @@ import spyOn = jest.spyOn;
 describe("TripService should", () => {
 
     const tripService = new TripService();
-    const loggedUser: User = new User();
+    const alice: User = new User();
 
     it("throw if user not logged in", () => {
         spyOn(UserSession, "getLoggedUser").mockReturnValue(null);
@@ -20,32 +20,32 @@ describe("TripService should", () => {
     });
 
     it("return an empty list when no friend", () => {
-        spyOn(UserSession, "getLoggedUser").mockReturnValue(new User());
+        spyOn(UserSession, "getLoggedUser").mockReturnValue(alice);
 
         expect(tripService.getTripsByUser(new User()))
             .toEqual([]);
     });
 
     it("return an empty list when user not in friends list", () => {
-        const inputUser = new User();
-        inputUser.addFriend(new User());
-        inputUser.addFriend(new User());
+        const bob = new User();
+        bob.addFriend(new User());
+        bob.addFriend(new User());
 
-        spyOn(UserSession, "getLoggedUser").mockReturnValue(new User());
+        spyOn(UserSession, "getLoggedUser").mockReturnValue(alice);
 
         expect(tripService.getTripsByUser(new User()))
             .toEqual([]);
     });
 
     it("return a trip list when user is in friends list", () => {
-        const inputUser = new User();
-        inputUser.addFriend(new User());
-        inputUser.addFriend(loggedUser);
+        const mark = new User();
+        mark.addFriend(new User());
+        mark.addFriend(alice);
 
-        spyOn(UserSession, "getLoggedUser").mockReturnValue(loggedUser);
+        spyOn(UserSession, "getLoggedUser").mockReturnValue(alice);
         spyOn(TripDAO, "findTripsByUser").mockReturnValue([new Trip(), new Trip()]);
 
-        expect(tripService.getTripsByUser(inputUser))
+        expect(tripService.getTripsByUser(mark))
             .toHaveLength(2);
     });
 });

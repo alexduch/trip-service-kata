@@ -2,7 +2,13 @@ import Trip from "../trip/Trip";
 
 export default class User {
     private trips: Trip[] = [];
-    private friends: User[] = [];
+    private readonly friends: User[] = [];
+
+    constructor(friends?: User[]) {
+        if (friends) {
+            this.friends = friends;
+        }
+    }
 
     public getFriends(): User[] {
         return this.friends;

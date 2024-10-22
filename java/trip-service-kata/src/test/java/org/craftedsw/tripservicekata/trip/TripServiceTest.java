@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -12,20 +11,29 @@ import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
 import org.craftedsw.tripservicekata.user.User;
 import org.craftedsw.tripservicekata.user.UserSession;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class TripServiceTest {
 
-  private UserSession userSession = mock(UserSession.class);
-  private TripRepository tripRepository = mock(TripRepository.class);
+  @Mock
+  private UserSession userSession;
+  @Mock
+  private TripRepository tripRepository;
 
-  private TripService tripService = new TripService(userSession, tripRepository);
+  @InjectMocks
+  private TripService tripService;
 
   @Test
   void shouldThrowIfUserIsAnonymous() {
     when(userSession.getLoggedUser()).thenReturn(null);
 
+    User targetUser = new User();
     assertThrows(UserNotLoggedInException.class,
-        () -> tripService.getTripsByUser(new User()));
+        () -> tripService.getTripsByUser(targetUser));
   }
 
   @Test
